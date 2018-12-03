@@ -107,3 +107,7 @@ describe('GET /todos:id', () => {
       .end(done);
   });
 });
+
+// describe('DELETE todos/:id',()=>{
+// it('should return deleted todo')
+// })

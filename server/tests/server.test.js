@@ -9,8 +9,7 @@ const todos = [
   {
     text: 'First test todo',
     _id: new ObjectID(),
-    completed: true,
-    completedAt: 333
+    completed: true
   },
   {
     text: 'Second test todo',
@@ -152,19 +151,17 @@ describe('DELETE todos/:id', () => {
 
 describe('PATCH /todos:id', () => {
   it('should update todo doc', done => {
-    const hexId = todos[1]._id.toHexString();
+    const hexId = todos[0]._id.toHexString();
     const text = 'Test Case';
     const completed = true;
 
     request(app)
       .patch(`/todos/${hexId}`)
-      .send({ text })
+      .send({ text, completed })
       .expect(200)
       .expect(res => {
         expect(res.body.text).toBe(text);
-      })
-      .expect(res => {
-        expect(res.body.completedAt).toBeFalsy();
+        expect(res.body.completedAt).toBeTruthy();
       })
       .end(done);
   });
@@ -178,6 +175,7 @@ describe('PATCH /todos:id', () => {
       .expect(200)
       .expect(res => {
         expect(res.body.completedAt).toBe(null);
+        expect(res.body.completedAt).toBeFalsy();
       })
       .end(done);
   });

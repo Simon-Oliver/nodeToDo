@@ -99,4 +99,14 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
+app.post('/user', (req, res) => {
+  const body = _.pick(req.body, ['email', 'password']);
+  const user = new User(body);
+  console.log(user);
+  user
+    .save()
+    .then(doc => res.send(doc))
+    .catch(e => res.status(400).send(e));
+});
+
 module.exports = { app };
